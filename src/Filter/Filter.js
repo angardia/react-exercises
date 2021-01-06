@@ -12,17 +12,43 @@ class Filter extends Component {
 				'Big ant',
 				'Small dinosaur',
 				'Medium dog'
-			]
+			],
+			itemsFiltered: [],
+
 		};
+	}
+	componentDidMount() {
+		this.setState({
+			itemsFiltered: this.state.items
+		})
+	}
+
+
+	toFilter(e) {
+		const value = e.target.value.toLowerCase();
+		// if (!this.state.itemsFiltered) {
+		// 	this.setState({
+		// 		itemsFiltered: this.state.items
+		// 	})
+		// 	return;
+		// }
+		this.setState({
+			// items : this.state.items.filter(item=> item.toLowerCase().includes(value) )
+
+			itemsFiltered: this.state.items.filter(item => item.toLowerCase().includes(value)),
+
+		})
+
 	}
 
 	render() {
+
 		return (
 			<div className="Filter">
 				<p>Filter the list as you type.</p>
-				<input placeholder="Search..." className="Filter__textbox" />
+				<input placeholder="Search..." className="Filter__textbox" onChange={e => this.toFilter(e)} />
 				<ul>
-					{this.state.items.map((item, index) => {
+					{this.state.itemsFiltered.map((item, index) => {
 						return <li key={index}>{item}</li>;
 					})}
 				</ul>

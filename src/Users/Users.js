@@ -2,6 +2,21 @@ import React, { Component } from 'react';
 import './Users.scss';
 
 class Users extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			userList: []
+		}
+	}
+	componentDidMount() {
+		fetch("https://netcraft2.s3-eu-west-1.amazonaws.com/users.json")
+			.then(res => res.json())
+			.then(userList => {
+				this.setState({
+					userList
+				})
+			})
+	}
 
 	render() {
 		return (
@@ -13,6 +28,11 @@ class Users extends Component {
 				</p>
 				<ul>
 
+					{
+						this.state.userList.map((user, i) => {
+							return <li key={i}>{user.name}</li>
+						})
+					}
 				</ul>
 			</div>
 		)
